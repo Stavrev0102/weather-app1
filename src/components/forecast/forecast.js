@@ -15,7 +15,6 @@ const WEEK_DAYS = [
 const Forecast = ({data}) => {
     const dayInAWeek = new Date().getDay();
    const foreCastDays =  WEEK_DAYS.slice(dayInAWeek, WEEK_DAYS.length).concat(WEEK_DAYS.slice(0, dayInAWeek))
-    console.log(foreCastDays);
     return (
     <>
     <label className="title"> Daily</label>
@@ -26,7 +25,9 @@ const Forecast = ({data}) => {
                     <AccordionItemButton>
                         <div className="daily-item">
                             <img alt="weather" className="icon-small" src={`icons/${item.weather[0].icon}.png`}></img>
-                            <label className="day"></label>
+                            <label className="day">{foreCastDays[index]}</label>
+                            <label className="description">{item.weather[0].description}</label>
+                            <label className="min-max">{Math.round(item.main.temp_min)}°C</label>
                             </div>
                     </AccordionItemButton>
                 </AccordionItemHeading>
