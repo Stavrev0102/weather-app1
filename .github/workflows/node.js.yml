@@ -30,5 +30,4 @@ jobs:
       run: |
         #!/bin/bash
         gnome-terminal -- npm run test-ui
-    - run: npm run test-ui
-
+    
