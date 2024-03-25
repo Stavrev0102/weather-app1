@@ -24,10 +24,11 @@ jobs:
         node-version: 18.x
         cache: 'npm'
     - run: npm install
-    - run: npm run start
-     # Add a new step to open a new terminal and run `npm run test-ui`
-    - name: Open new terminal and run npm run test-ui
-      run: |
-        #!/bin/bash
-        gnome-terminal -- npm run test-ui
+    - name: Start the application
+      run: npm run start &
+
+    - name: Run UI tests
+      run: npm run test-ui
+    
+      
     
