@@ -25,5 +25,10 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run start
+     # Add a new step to open a new terminal and run `npm run test-ui`
+    - name: Open new terminal and run npm run test-ui
+      run: |
+        #!/bin/bash
+        gnome-terminal -- npm run test-ui
     - run: npm run test-ui
 
