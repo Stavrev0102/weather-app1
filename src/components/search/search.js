@@ -6,24 +6,29 @@ import { GEO_API_URL, geoApiOptions } from "../../api";
 const Search = ({ onSearchChange}) => {
     // eslint-disable-next-line no-unused-vars
     const [search,setSearch] = useState(null);
-    const loadOptions = async(inputValue) => {
-            return fetch(
-              `${GEO_API_URL}?minPopulation=1000000&namePrefix=${inputValue}`,
+    const loadOptions = async (inputValue) => {
+      try {
+          const response = await fetch(
+              `${GEO_API_URL}?minPopulation=10000&namePrefix=${inputValue}`,
               geoApiOptions
-            )
-              .then((res) => res.json())
-              .then((res) => {
-                return {
-                  options: res.data.map((city) => {
-                    return {
-                      value: `${city.latitude} ${city.longitude}`,
-                      label: `${city.name} , ${city.countryCode}`,
-                    };
-                  }),
-                };
-              })
-              .catch((err) => console.error(err));
-        }
+          );
+          const data = await response.json();
+  
+          if (Array.isArray(data.data)) {
+              const options = data.data.map((city) => ({
+                  value: `${city.latitude} ${city.longitude}`,
+                  label: `${city.name}, ${city.countryCode}`,
+              }));
+              return { options };
+          } else {
+              throw new Error('Invalid response format');
+          }
+      } catch (error) {
+          console.error('Error loading options:', error);
+          return { options: [] }; // Return an empty array in case of error
+      }
+  };
+  
         
 
     const handleOnChange = (searchData) => {
